@@ -4,7 +4,7 @@
 """
 ___author___   = 'Cédric Montero'
 ___contact___  = 'cedric.montero@esrf.fr'
-___copyright__ = '2013, ESRF'
+___copyright__ = '2013, European Synchrotron Radiation Facility (ESRF)'
 ___version___  = '0.0.1'
 
 """ ______________________________SETTINGS_____________________________"""
