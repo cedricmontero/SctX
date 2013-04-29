@@ -175,6 +175,24 @@ def CreateAverageFromScan(wdname,sf,scannumber):
 	print ' -> Average image calculated.' 
 	return CompositeArray
 
+def ComputeDirectImage(wdname,sf,scannumber,mode):
+    """
+    Compute direct operations (such as average, maximum projection, minimum projection, median) from scan image serie
+    @param mode : operation 'average','maximum','minimum','median'
+    @param mode : string
+    """
+    filelist = CreateScanDataFileList(wdname,sf,scannumber)
+	print 'Calculating the ',mode,' image of scan ',scannumber, '...'	
+	print '    . First file =', filelist[0]
+	print '    . Last  file =', filelist[-1]
+    nbfiles = len(filelist)
+    #if mode == 'average':
+    #    DirectImage = fabio.open(filelist[0]).data.astype("float32")
+    #    for impath in filelist[1::]:
+    #        imdata = fabio.open(impath).data.astype("float32")
+            
+    #TODO : finish the implementation 
+
 if __name__ == "__main__":
 	wdname = '/Users/labo/Folder/ESRF/DATA/d_2012-07-29_inh_hygro-wood/'
 	sfpath_mat = 'DATA/sample1/sample1.dat'
