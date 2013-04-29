@@ -167,9 +167,9 @@ def CreateAverageFromScan(wdname,sf,scannumber):
 	print '    . First file =', filelist[0]
 	print '    . Last  file =', filelist[-1]
 	nbfiles = len(filelist)
-	CompositeArray = fabio.open(filelist[0]).data
+	CompositeArray = fabio.open(filelist[0]).data.astype("float32")
 	for impath in filelist[1::]:
-		imdata = fabio.open(impath).data
+		imdata = fabio.open(impath).data.astype("float32")
 		CompositeArray = CompositeArray + imdata
 	CompositeArray = numpy.divide(CompositeArray,float(nbfiles))
 	print ' -> Average image calculated.' 
