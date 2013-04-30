@@ -96,9 +96,3 @@ def findCalibrationConfigs(sf):
 
 	return config_calib.items()
 
-# Example of this file :
-#get_ScanNumbers(sf)
-#get_ScanValueInSpecHeaderComment(sf,13,'#C qq.adet.nominaldist')
-#get_ScanMeasurementsAlongTime(sf,13,'eh2_2')
-#expo_time = get_ScanExposureTime(sf,13)
-#config_calib = findCalibrationConfigs(sf)
