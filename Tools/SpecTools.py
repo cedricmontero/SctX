@@ -1,24 +1,23 @@
 # -*- coding: utf-8 -*-
 """
- This module offer simple function to retrieve informations from a spec file
+ This module offer simple functions to retrieve informations from a SPEC file
 """
 ___author___   = 'Cédric Montero'
 ___contact___  = 'cedric.montero@esrf.fr'
-___copyright__ = '2012, European Synchrotron Radiation Facility, ESRF'
-___version___  = '0'
+___copyright__ = 'European Synchrotron Radiation Facility (ESRF), Grenoble, France'
+___version___  = '0.1'
 
 """ External modules (preliminary installation could be require) """
-import specfile#ESRF module to explore Spec files (contact : jerome.kieffer@esrf.fr)
+# Public modules :
 import datetime
 import numpy
 from collections import defaultdict # Used in detection of cnofiguration of calibration
+# ESRF modules :
+import specfile # ESRF module to explore Spec files (contact : jerome.kieffer@esrf.fr)
 
-# Inform the spec file location
-#fpath = '/Users/labo/Folder/ESRF/Projects/HempFibre_Structuration/d_2012-06-11_inh_hemp/DATA/hemp/hemp.dat'
-#sf = specfile.Specfile(fpath)#Create a spec object containing the informations
-#Scan = sf.select('13')
+""" Internal modules (local modules files) """
 
-# Functions :
+""" Functions definitions """
 def get_ScanNumbers(sf):
 	"""
 	Get the number of scan of the files
