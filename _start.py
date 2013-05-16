@@ -23,6 +23,7 @@ except ImportError:
 import SpecTools
 
 """ Set the working directory as experiment directory """
+# TODO : Check if just below there is PROCESS directory or not
 wdname = os.getcwd().rsplit('/',1)[0] + '/'
 
 os.chdir(wdname)# Change current working directory

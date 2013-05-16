@@ -25,6 +25,19 @@ except ImportError:
 """------------------------------------------------------------------------------------"""
 """                    General functions on spec file informations 
 ---------------------------------------------------------------------------------------"""
+def show_SpecInfos(sf):
+    """
+    Print some Specfile informations
+    @param sf : specfile object or path
+    @type  sf : specfile of string
+    """
+    if type(sf) == 'str':
+        sf = specfile.Specfile(sf)
+    else:
+        print '%i scans have been performed in this session'%getScanNumbers(sf)
+ 
+
+
 def get_ScanNumbers(sf):
 	"""
 	Get the number of scan of the files
