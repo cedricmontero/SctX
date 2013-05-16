@@ -34,7 +34,7 @@ def show_SpecInfos(sf):
     if type(sf) == 'str':
         sf = specfile.Specfile(sf)
     else:
-        print '%i scans have been performed in this session'%getScanNumbers(sf)
+        print '%i scans have been performed in this session'%SpecTools.getScanNumbers(sf)
  
 
 
