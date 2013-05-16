@@ -12,8 +12,13 @@ ___version___  = '0.1'
 import datetime
 import numpy
 from collections import defaultdict # Used in detection of cnofiguration of calibration
+
 # ESRF modules :
-import specfile # ESRF module to explore Spec files (contact : jerome.kieffer@esrf.fr)
+try:
+    # ESRF module to explore Spec files (contact : jerome.kieffer@esrf.fr)
+    import specfile
+except ImportError:
+    from PyMca import specfile
 
 """ Internal modules (local modules files) """
 
