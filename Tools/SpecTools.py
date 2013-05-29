@@ -25,6 +25,13 @@ except ImportError:
 """------------------------------------------------------------------------------------"""
 """                    General functions on spec file informations 
 ---------------------------------------------------------------------------------------"""
+def get_ScanNumbers(sf):
+    """
+    Get the number of scan of the files
+    @type sf : specfile object from specfile module
+    """
+    return int(sf.scanno())
+
 def show_SpecInfos(sf):
     """
     Print some Specfile informations
@@ -33,17 +40,24 @@ def show_SpecInfos(sf):
     """
     if type(sf) == 'str':
         sf = specfile.Specfile(sf)
-    else:
-        print '%i scans have been performed in this session'%SpecTools.getScanNumbers(sf)
- 
+    
+    print '%i scans have been performed in this session'% get_ScanNumbers(sf)
 
-
-def get_ScanNumbers(sf):
-	"""
-	Get the number of scan of the files
-	@type sf : specfile object from specfile module
-	"""
-	return sf.scanno()
+def get_ScanCommand(sf,scannumber):
+    """
+    Get the scan command
+    @param sf : specfile object or path to spec file
+    @type  sf : specfile or string
+    """
+    # Convert the entries if required :
+    if type(sf) == str:
+        sf = specfile.Specfile(sf)
+    if type(scannumber) == int:
+        scannumber = str(scannumber)
+    # Store the scan data :
+    scan = sf.select(scannumber)
+    # Retrieve the command :
+    return scan.header('S')[0]
 
 def get_ScanStartingTime(sf,scannumber):
     """
