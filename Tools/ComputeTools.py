@@ -13,7 +13,6 @@ import fabio
 import numpy
 """ Internal modules (local modules files) """
 
-
 """ Program configurations """
 
 """ Functions definitions """
