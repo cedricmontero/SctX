@@ -166,13 +166,40 @@ def CreateAverageFromScan(wdname,sf,scannumber):
 	print '    . First file =', filelist[0]
 	print '    . Last  file =', filelist[-1]
 	nbfiles = len(filelist)
-	CompositeArray = fabio.open(filelist[0]).data
+	CompositeArray = fabio.open(filelist[0]).data.astype("float32")
 	for impath in filelist[1::]:
-		imdata = fabio.open(impath).data
+		imdata = fabio.open(impath).data.astype("float32")
 		CompositeArray = CompositeArray + imdata
 	CompositeArray = numpy.divide(CompositeArray,float(nbfiles))
 	print ' -> Average image calculated.' 
 	return CompositeArray
+
+def ComputeDirectImage(wdname,sf,scannumber,mode,start=0,end=-1,idxlist=None,roi=None):
+    """
+    Compute direct operations (such as average, maximum projection, minimum projection, median) from scan image serie
+    @param         mode : operation 'average','maximum','minimum','median'
+    @type          mode : string
+    @param        start : inclusive index into the image serie to start the calculation
+    @type         start : integer
+    @param          end : inclusive index into the image serie to end the calculation
+    @type           end : integer
+    @param      idxlist : list of index to get in the calculation
+    @type       idxlist : numpy 1d array
+    @param          roi : region of interest into each image, will also change OutputImage size.
+    @type         tuple : (start_index_horiz,end_index_horiz,start_index_verti,end_index_verti)
+    @return OutputImage : resulting image
+    """
+    filelist = CreateScanDataFileList(wdname,sf,scannumber)
+	print 'Calculating the ',mode,' image of scan ',scannumber, '...'	
+	print '    . First file of the scan =', filelist[0]
+	print '    . Last  file of the scan =', filelist[-1]
+    nbfiles = len(filelist)
+    #if mode == 'average':
+    #    DirectImage = fabio.open(filelist[0]).data.astype("float32")
+    #    for impath in filelist[1::]:
+    #        imdata = fabio.open(impath).data.astype("float32")
+    #TODO : finish the implementation
+    return OutputImage 
 
 if __name__ == "__main__":
 	wdname = '/Users/labo/Folder/ESRF/DATA/d_2012-07-29_inh_hygro-wood/'

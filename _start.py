@@ -13,13 +13,18 @@ ___version___  = '0.0.1'
 import sys
 sys.path.append('.'+'/Tools') # Add the Tools directory to the module path list
 import os
-import fabio                  # ESRF library for I/O of 2D X-ray detector images
+# ESRF library for I/O of 2D X-ray detector images
+try:
+    import fabio
+except ImportError:
+    print("No module to read ESRF edf images. Please install FabIO module.")
 
 """ Internal modules (local modules files) """
 import SpecTools
 
 """ Set the working directory as experiment directory """
-wdname = os.getcwd().rsplit('/',2)[0] + '/'
+# TODO : Check if just below there is PROCESS directory or not
+wdname = os.getcwd().rsplit('/',1)[0] + '/'
 
 os.chdir(wdname)# Change current working directory
 print 'Working directory is set to',os.getcwd()

@@ -1,31 +1,80 @@
 # -*- coding: utf-8 -*-
 """
- This module offer simple function to retrieve informations from a spec file
+ This module offer simple functions to retrieve informations from a SPEC file
 """
 ___author___   = 'Cédric Montero'
 ___contact___  = 'cedric.montero@esrf.fr'
-___copyright__ = '2012, European Synchrotron Radiation Facility, ESRF'
-___version___  = '0'
+___copyright__ = 'European Synchrotron Radiation Facility (ESRF), Grenoble, France'
+___version___  = '0.1'
 
 """ External modules (preliminary installation could be require) """
-import specfile#ESRF module to explore Spec files (contact : jerome.kieffer@esrf.fr)
+# Public modules :
 import datetime
 import numpy
 from collections import defaultdict # Used in detection of cnofiguration of calibration
 
-# Inform the spec file location
-#fpath = '/Users/labo/Folder/ESRF/Projects/HempFibre_Structuration/d_2012-06-11_inh_hemp/DATA/hemp/hemp.dat'
-#sf = specfile.Specfile(fpath)#Create a spec object containing the informations
-#Scan = sf.select('13')
+# ESRF modules :
+try:
+    # ESRF module to explore Spec files (contact : jerome.kieffer@esrf.fr)
+    import specfile
+except ImportError:
+    from PyMca import specfile
 
-# Functions :
+""" Internal modules (local modules files) """
+
+"""------------------------------------------------------------------------------------"""
+"""                    General functions on spec file informations 
+---------------------------------------------------------------------------------------"""
 def get_ScanNumbers(sf):
-	"""
-	Get the number of scan of the files
-	@type sf : specfile object from specfile module
-	"""
-	return sf.scanno()
+    """
+    Get the number of scan of the files
+    @type sf : specfile object from specfile module
+    """
+    return int(sf.scanno())
 
+def show_SpecInfos(sf):
+    """
+    Print some Specfile informations
+    @param sf : specfile object or path
+    @type  sf : specfile of string
+    """
+    if type(sf) == 'str':
+        sf = specfile.Specfile(sf)
+    
+    print '%i scans have been performed in this session'% get_ScanNumbers(sf)
+
+def get_ScanCommand(sf,scannumber):
+    """
+    Get the scan command
+    @param sf : specfile object or path to spec file
+    @type  sf : specfile or string
+    """
+    # Convert the entries if required :
+    if type(sf) == str:
+        sf = specfile.Specfile(sf)
+    if type(scannumber) == int:
+        scannumber = str(scannumber)
+    # Store the scan data :
+    scan = sf.select(scannumber)
+    # Retrieve the command :
+    return scan.header('S')[0]
+
+def get_ScanStartingTime(sf,scannumber):
+    """
+    Get the starting time of the scan
+    @type sf : specfile object from specfile module
+    @type scannumber : integer
+    """
+    # Store the scan data :
+    scan = sf.select(str(scannumber))
+    data = scan.data()
+    # Calculate the first time of the first measurement :
+    eptime = sf.epoch() + numpy.array(data[1,:][0])
+    schedule   = datetime.datetime.fromtimestamp(eptime)
+    return schedule
+
+"""                        Retrieve measurement from a spec file 
+---------------------------------------------------------------------------------------"""
 def get_ScanValueInSpecHeaderComment(sf,scannumber,field):
 	"""
 	Retrieve the value of a scan comment field
@@ -97,9 +146,3 @@ def findCalibrationConfigs(sf):
 
 	return config_calib.items()
 
-# Example of this file :
-#get_ScanNumbers(sf)
-#get_ScanValueInSpecHeaderComment(sf,13,'#C qq.adet.nominaldist')
-#get_ScanMeasurementsAlongTime(sf,13,'eh2_2')
-#expo_time = get_ScanExposureTime(sf,13)
-#config_calib = findCalibrationConfigs(sf)
