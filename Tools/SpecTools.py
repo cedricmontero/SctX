@@ -25,12 +25,14 @@ except ImportError:
 """------------------------------------------------------------------------------------"""
 """                    General functions on spec file informations 
 ---------------------------------------------------------------------------------------"""
-def get_ScanNumbers(sf):
+
+def get_NumberOfScans(sf):
     """
-    Get the number of scan of the files
+    Get the number of scan (and mesh) of the specification file
     @type sf : specfile object from specfile module
     """
-    return int(sf.scanno())
+    return sf.scanno()
+
 
 def show_SpecInfos(sf):
     """
