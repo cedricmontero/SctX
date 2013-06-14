@@ -33,7 +33,6 @@ def get_NumberOfScans(sf):
     """
     return sf.scanno()
 
-
 def show_SpecInfos(sf):
     """
     Print some Specfile informations
@@ -42,7 +41,6 @@ def show_SpecInfos(sf):
     """
     if type(sf) == 'str':
         sf = specfile.Specfile(sf)
-    
     print '%i scans have been performed in this session'% get_ScanNumbers(sf)
 
 def get_ScanCommand(sf,scannumber):
@@ -74,6 +72,22 @@ def get_ScanStartingTime(sf,scannumber):
     eptime = sf.epoch() + numpy.array(data[1,:][0])
     schedule   = datetime.datetime.fromtimestamp(eptime)
     return schedule
+
+def get_Energy(sf):
+    """
+    Retrive the energy value along all scans of the spec file. In the majority of cases the energy is fixed during the measurement phase of the experiment.
+    @param sf : specfile object
+    @return : energy [keV]
+    """
+    return eval(get_ScanValueInSpecHeaderComment(sf,1,'#C qq.mono.energy'))
+
+def get_Wavelength(sf):
+    """
+    Retrive the wavelength value along all scans of the spec file. In the majority of cases the wavelength is fixed during the measurement phase of the experiment.
+    @param sf : specfile object
+    @return wavelength [nm]
+    """
+    return eval(get_ScanValueInSpecHeaderComment(sf,1,'#C qq.mono.lambda')) / 10
 
 """                        Retrieve measurement from a spec file 
 ---------------------------------------------------------------------------------------"""
