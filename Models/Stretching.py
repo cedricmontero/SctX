@@ -33,7 +33,7 @@ class Stretching:
         for i in self.Stretch_Time:
             self.Stretch_Time_inHr.append((i-self.Stretch_Time[0]).days*24.+(i-self.Stretch_Time[0]).seconds/3600.)
 
-    def display_Stretch_Volt(self,ylim=(min(self.Stretch_Volt),max(self.Stretch_Volt))):
+    def display_Stretch_Volt(self,ylim=(min(Stretch_Volt),max(Stretch_Volt))):
         fig = pylab.figure(figsize=(7,4))
         dpl = pylab.gcf()
         dpl.canvas.set_window_title('Stretch_Volt')
