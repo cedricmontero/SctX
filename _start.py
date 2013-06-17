@@ -17,7 +17,7 @@ import sys
 import os
 sys.path.append(os.path.realpath('.') + os.path.sep + 'Tools') # Add the Tools directory to the module path list
 sys.path.append(os.path.realpath('.') + os.path.sep + 'Models') # Add the Models directory to the module path list
-# Set data visualisation library :
+# Set calculation and data visualisation library :
 import pylab
 pylab.ion()
 import numpy
