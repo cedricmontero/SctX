@@ -23,15 +23,15 @@ pylab.ion()
 import numpy
 
 """ Internal modules (local modules files) """
-import SettingsTools
-import SpecTools
+from Tools import SettingsTools
+from Tools import SpecTools
 
 """ Set the working directory as experiment directory """
-print('Set the working directory :')
+#print('Set the working directory :')
 
-SDE = SettingsTools.SetDirectoryEnvironment()
-wdname = SDE.wdname
-print '    . Working directory is set to',os.getcwd()
+#SDE = SettingsTools.SetDirectoryEnvironment()
+#wdname = SDE.wdname
+#print '    . Working directory is set to',os.getcwd()
 
 """ ______________________________ANALYSIS_____________________________"""
 
