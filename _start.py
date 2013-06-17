@@ -11,17 +11,16 @@ ___version___  = '0.1.beta'
 
 print('Welcome in SctX (v.%s) !'%___version___)
 
-
 """ External modules (preliminary installation could be require) """
+# Set the working environment : 
 import sys
-sys.path.append('.'+'/Tools') # Add the Tools directory to the module path list
 import os
-import sys
-# ESRF library for I/O of 2D X-ray detector images
-#try:
-#    import fabio
-#except ImportError:
-#    print('No module to read ESRF edf images. Please install FabIO module.')
+sys.path.append(os.path.realpath('.') + os.path.sep + 'Tools') # Add the Tools directory to the module path list
+sys.path.append(os.path.realpath('.') + os.path.sep + 'Models') # Add the Models directory to the module path list
+# Set data visualisation library :
+import pylab
+pylab.ion()
+import numpy
 
 """ Internal modules (local modules files) """
 import SettingsTools
