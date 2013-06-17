@@ -23,8 +23,7 @@ pylab.ion()
 import numpy
 
 """ Internal modules (local modules files) """
-from Tools import SettingsTools
-from Tools import SpecTools
+from Tools import SettingsTools,SpecTools
 
 """ Set the working directory as experiment directory """
 #print('Set the working directory :')

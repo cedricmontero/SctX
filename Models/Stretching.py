@@ -8,12 +8,12 @@ ___copyright__ = '2013, European Synchrotron Radiation Facility (ESRF)'
 ___version___  = '0.1.beta'
 
 # Set the working environment :
-#import sys
-#import os
-#sys.path.append(os.path.realpath('..') + os.path.sep + 'Tools') #  Add the Tools  directory to the module path list
+import sys
+import os
+sys.path.append(os.path.realpath('..') + os.path.sep + 'Tools') #  Add the Tools  directory to the module path list
 
 #import numpy
-#import SpecTools
+import SpecTools
 
 class Stretching:
     def set_specfile(self,sfpath):
