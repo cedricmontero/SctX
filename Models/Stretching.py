@@ -11,9 +11,12 @@ ___version___  = '0.1.beta'
 import sys
 import os
 sys.path.append(os.path.realpath('..') + os.path.sep + 'Tools') #  Add the Tools  directory to the module path list
-
-#import numpy
 import SpecTools
+
+# Set calculation and data visualisation library :
+import pylab
+pylab.ion()
+import numpy
 
 class Stretching:
     def set_specfile(self,sfpath):
