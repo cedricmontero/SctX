@@ -19,6 +19,8 @@ pylab.ion()
 import numpy
 
 class Stretching:
+    Stretch_Volt = self.Stretch_Volt
+
     def set_specfile(self,sfpath):
         """
         Set the specfile and retrieve the data
