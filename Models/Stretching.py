@@ -19,8 +19,6 @@ pylab.ion()
 import numpy
 
 class Stretching:
-    Stretch_Volt = self.Stretch_Volt
-
     def set_specfile(self,sfpath):
         """
         Set the specfile and retrieve the data
@@ -34,19 +32,6 @@ class Stretching:
         self.Stretch_Time_inHr = []
         for i in self.Stretch_Time:
             self.Stretch_Time_inHr.append((i-self.Stretch_Time[0]).days*24.+(i-self.Stretch_Time[0]).seconds/3600.)
-
-    def display_Stretch_Volt(self,ylim=(min(Stretch_Volt),max(Stretch_Volt))):
-        fig = pylab.figure(figsize=(7,4))
-        dpl = pylab.gcf()
-        dpl.canvas.set_window_title('Stretch_Volt')
-        ax = fig.add_subplot(111)
-        ax.plot(self.Stretch_Time_inHr,self.Stretch_Volt,'bx',markersize=2)
-        ax.set_xlabel('Elapsed Time [hr]')
-        ax.set_ylabel('Force [Volt]')
-        ax.set_ylim(ylim)
-        pylab.grid(True)
-
-
 
 #if __name__ == '__main__':
     # Try to instantiate the class :
