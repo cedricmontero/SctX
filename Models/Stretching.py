@@ -71,7 +71,7 @@ class Stretching:
             self.Stretch_Volt = self.Stretch_Volt - offset_Volt
         elif offset_Volt == None and offset_N != None:
             self.Stretch_N    = self.Stretch_N - offset_N
-        else
+        else:
             print 'You cannot change Volt and Newton simultaneously !'
     
     def set_zero_disp_offset(self,offset_MM = 0):
