@@ -32,6 +32,24 @@ class Stretching:
         self.Stretch_Time_inHr = []
         for i in self.Stretch_Time:
             self.Stretch_Time_inHr.append((i-self.Stretch_Time[0]).days*24.+(i-self.Stretch_Time[0]).seconds/3600.)
+        
+    def display_Stretch_Volt(self)
+        fig = pylab.figure(figsize=(7,4))
+        dpl = pylab.gcf()
+        dpl.canvas.set_window_title('Stretch_Volt')
+        ax = fig.add_subplot(111)
+        ax.plot(self.Stretch_Time_inHr,self.Stretch_Volt,'bx',markersize=2)
+        ax.set_xlabel('Elapsed Time [hr]')
+        ax.set_ylabel('Force [Volt]')
+        pylab.grid(True)
+
+    def set_zero_force_offset(self,Yoffset_Volt = 0,Yoffset_N = 0):
+        """
+        Correct an offset value in the force measuremets (positive offset decrease the measurement value)
+        """
+        self.Stretch_Volt = self.Stretch_Volt - Yoffset_Volt
+        self.Stretch_N    = self.Stretch_N - Yoffset_N
+        
 
 #if __name__ == '__main__':
     # Try to instantiate the class :
