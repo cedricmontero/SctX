@@ -34,7 +34,7 @@ class Stretching:
             self.Stretch_Time_inHr.append((i-self.Stretch_Time[0]).days*24.+(i-self.Stretch_Time[0]).seconds/3600.)
         
     def display_Stretch_Volt(self):
-        fig = pylab.figure(figsize=(8,4))
+        fig = pylab.figure(figsize=(9,4))
         dpl = pylab.gcf()
         dpl.canvas.set_window_title('Stretch_Volt')
         ax = fig.add_subplot(111)
@@ -44,7 +44,7 @@ class Stretching:
         pylab.grid(True)
     
     def display_Stretch_N(self):
-        fig = pylab.figure(figsize=(8,4))
+        fig = pylab.figure(figsize=(9,4))
         dpl = pylab.gcf()
         dpl.canvas.set_window_title('Stretch_N')
         ax = fig.add_subplot(111)
@@ -54,7 +54,7 @@ class Stretching:
         pylab.grid(True)
     
     def display_Stretch_MM(self):
-        fig = pylab.figure(figsize=(8,4))
+        fig = pylab.figure(figsize=(9,4))
         dpl = pylab.gcf()
         dpl.canvas.set_window_title('Stretch_MM')
         ax = fig.add_subplot(111)
@@ -63,12 +63,16 @@ class Stretching:
         ax.set_ylabel('Disp [mm]')
         pylab.grid(True)
 
-    def set_zero_force_offset(self,offset_Volt = 0,offset_N = 0):
+    def set_zero_force_offset(self,offset_Volt = None,offset_N = None):
         """
         Correct an offset value in the force measuremets (positive offset decrease the measurement value)
         """
-        self.Stretch_Volt = self.Stretch_Volt - offset_Volt
-        self.Stretch_N    = self.Stretch_N - offset_N
+        if offset_Volt != None and offset_N == None:
+            self.Stretch_Volt = self.Stretch_Volt - offset_Volt
+        elif offset_Volt == None and offset_N != None:
+            self.Stretch_N    = self.Stretch_N - offset_N
+        else
+            print 'You cannot change Volt and Newton simultaneously !'
     
     def set_zero_disp_offset(self,offset_MM = 0):
         self.Stretch_MM = self.Stretch_MM - offset_MM 
