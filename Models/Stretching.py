@@ -33,32 +33,32 @@ class Stretching:
         for i in self.Stretch_Time:
             self.Stretch_Time_inHr.append((i-self.Stretch_Time[0]).days*24.+(i-self.Stretch_Time[0]).seconds/3600.)
         
-    def display_Stretch_Volt(self):
+    def display_Stretch_Volt(self,specimen_label = None):
         fig = pylab.figure(figsize=(9,4))
         dpl = pylab.gcf()
         dpl.canvas.set_window_title('Stretch_Volt')
         ax = fig.add_subplot(111)
-        ax.plot(self.Stretch_Time_inHr,self.Stretch_Volt,'bx',markersize=2)
+        ax.plot(self.Stretch_Time_inHr,self.Stretch_Volt,'bx',markersize=2,label = specimen_label)
         ax.set_xlabel('Elapsed Time [hr]')
         ax.set_ylabel('Force [Volt]')
         pylab.grid(True)
     
-    def display_Stretch_N(self):
+    def display_Stretch_N(self,specimen_label = None):
         fig = pylab.figure(figsize=(9,4))
         dpl = pylab.gcf()
         dpl.canvas.set_window_title('Stretch_N')
         ax = fig.add_subplot(111)
-        ax.plot(self.Stretch_Time_inHr,self.Stretch_N,'bx',markersize=2)
+        ax.plot(self.Stretch_Time_inHr,self.Stretch_N,'bx',markersize=2,label = specimen_label)
         ax.set_xlabel('Elapsed Time [hr]')
         ax.set_ylabel('Force [N]')
         pylab.grid(True)
     
-    def display_Stretch_MM(self):
+    def display_Stretch_MM(self,specimen_label = None):
         fig = pylab.figure(figsize=(9,4))
         dpl = pylab.gcf()
         dpl.canvas.set_window_title('Stretch_MM')
         ax = fig.add_subplot(111)
-        ax.plot(self.Stretch_Time_inHr,self.Stretch_MM,'bx',markersize=2)
+        ax.plot(self.Stretch_Time_inHr,self.Stretch_MM,'bx',markersize=2,label = specimen_label)
         ax.set_xlabel('Elapsed Time [hr]')
         ax.set_ylabel('Disp [mm]')
         pylab.grid(True)
@@ -67,6 +67,7 @@ class Stretching:
         """
         Correct an offset value in the force measuremets (positive offset decrease the measurement value)
         """
+        # TODO : Calculate the ratio N2V and V2N to correct the measurements accordingly
         if offset_Volt != None and offset_N == None:
             self.Stretch_Volt = self.Stretch_Volt - offset_Volt
         elif offset_Volt == None and offset_N != None:
@@ -75,6 +76,9 @@ class Stretching:
             print 'You cannot change Volt and Newton simultaneously !'
     
     def set_zero_disp_offset(self,offset_MM = 0):
+        """
+        Correct an offset value in the displacement measuremets (positive offset decrease the measurement value)
+        """
         self.Stretch_MM = self.Stretch_MM - offset_MM 
 
 if __name__ == '__main__':
