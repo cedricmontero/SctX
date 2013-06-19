@@ -42,6 +42,8 @@ class Stretching:
         ax.set_xlabel('Elapsed Time [hr]')
         ax.set_ylabel('Force [Volt]')
         pylab.grid(True)
+        if specimen_label != None:
+            pylab.legend()
     
     def display_Stretch_N(self,specimen_label = None):
         fig = pylab.figure(figsize=(9,4))
@@ -52,6 +54,8 @@ class Stretching:
         ax.set_xlabel('Elapsed Time [hr]')
         ax.set_ylabel('Force [N]')
         pylab.grid(True)
+        if specimen_label != None:
+            pylab.legend()
     
     def display_Stretch_MM(self,specimen_label = None):
         fig = pylab.figure(figsize=(9,4))
@@ -62,6 +66,8 @@ class Stretching:
         ax.set_xlabel('Elapsed Time [hr]')
         ax.set_ylabel('Disp [mm]')
         pylab.grid(True)
+        if specimen_label != None:
+            pylab.legend()
 
     def set_zero_force_offset(self,offset_Volt = None,offset_N = None):
         """
