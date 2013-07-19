@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 """
  Modul help
 """
@@ -210,14 +210,14 @@ if __name__ == "__main__":
     sf_mat = SpecTools.specfile.Specfile(wdname + sfpath_mat)
     ScanBackAt55pc = '9'
     Back = CreateAverageFromScan(wdname,sf_mat,ScanBackAt55pc)
-	# Test of calculation of mesh composite image and display :
-	#scannumberMesh = '6'
-	#SpecimenPosMesh, CompositeMesh = CreateCompositeFromScan(wdname,sf_mat,scannumberMesh,background=Back)
-	#import DisplayTools
-	#DisplayTools.display_image_from_array(CompositeMesh)
-	#DisplayTools.display_PIL(CompositeMesh)
-	# Test of calculation of scan composite image and display :
-	scannumberScan = '7'
-	SpecimenPosScan, CompositeScan = CreateCompositeFromScan(wdname,sf_mat,scannumberScan,background=Back)
-	#DisplayTools.display_image_from_array(CompositeScan)
-	#DisplayTools.display_PIL(CompositeScan)
+    # Test of calculation of mesh composite image and display :
+    #scannumberMesh = '6'
+    #SpecimenPosMesh, CompositeMesh = CreateCompositeFromScan(wdname,sf_mat,scannumberMesh,background=Back)
+    #import DisplayTools
+    #DisplayTools.display_image_from_array(CompositeMesh)
+    #DisplayTools.display_PIL(CompositeMesh)
+    # Test of calculation of scan composite image and display :
+    #scannumberScan = '7'
+    #SpecimenPosScan, CompositeScan = CreateCompositeFromScan(wdname,sf_mat,scannumberScan,background=Back)
+    #DisplayTools.display_image_from_array(CompositeScan)
+    #DisplayTools.display_PIL(CompositeScan)
