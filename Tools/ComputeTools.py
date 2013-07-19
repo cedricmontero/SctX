@@ -33,7 +33,10 @@ def CreateScanDataFileList(wdname,sf,scannumber):
     # Set the last directory specified in wdname as the key to set the equivalency
     keydname = wdname.split('/')[-2]
     # Position of experiment directory name (edname) in the original directory name (odname) field :
-    poskey   = int([pos for pos in range(len(odname.split('/'))) if odname.split('/')[pos] == keydname][0])
+    try:
+        poskey   = int([pos for pos in range(len(odname.split('/'))) if odname.split('/')[pos] == keydname][0])
+    except IndexError:# Case of keydname is not identical between original directory and actual directory
+        poskey   = int([pos for pos in range(len(odname.split('/'))) if odname.split('/')[pos] == 'DATA'][0]) - 1
     fdname   = wdname + '/'.join(odname.split('/')[poskey+1::]) + '/'#Directory of the files
     nbmeas   = sf.select(str(scannumber)).data().shape[1]#Number of measurements recorded (can be different from expected in the command if user stop the scan)
     fprefix  = SpecTools.get_ScanValueInSpecHeaderComment(sf,scannumber,'#C qq.adet.prefix')
