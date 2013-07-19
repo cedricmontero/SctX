@@ -17,28 +17,28 @@ import numpy
 
 """ Functions definitions """
 def CreateScanDataFileList(wdname,sf,scannumber):
-	"""
-	Create the list of localized file from specfile scan number specified
-	@param     wdname: main working path directory containing DATA/, PROCESS/ and REPORT/ folders afterward
-	@type      wdname: string
-	@param         sf: specfile informations
-	@type          sf: specfile object
-	@param scannumber: number of the scan data to find out
-	@type  scannumber: string
-	"""
-	# Original ESRF directory name of files
-	odname   = SpecTools.get_ScanValueInSpecHeaderComment(sf,scannumber,'#C qq.adet.dname')
-	# Equivalent directory name in the path
-	edname   = odname.split('/')
-	# Set the last directory specified in wdname as the key to set the equivalency
-	keydname = wdname.split('/')[-2]
-	# Position of edname in the odname field
-	poskey   = int([pos for pos in range(len(odname.split('/'))) if odname.split('/')[pos] == keydname][0])
-	fdname   = wdname + '/'.join(odname.split('/')[poskey+1::]) + '/'#Directory of the files
-	nbmeas   = sf.select(str(scannumber)).data().shape[1]#Number of measurements recorded (can be different from expected in the command if user stop the scan)
-	fprefix  = SpecTools.get_ScanValueInSpecHeaderComment(sf,scannumber,'#C qq.adet.prefix')
-	filelist = [fdname + fprefix + str(val).zfill(4) + '.edf' for val in range(0,nbmeas)]
-	return filelist
+    """
+    Create the list of localized file from specfile scan number specified
+    @param     wdname: main working path directory containing DATA/, PROCESS/ and REPORT/ folders afterward
+    @type      wdname: string
+    @param         sf: specfile informations
+    @type          sf: specfile object
+    @param scannumber: number of the scan data to find out
+    @type  scannumber: string
+    """
+    # Original ESRF directory name of files
+    odname   = SpecTools.get_ScanValueInSpecHeaderComment(sf,scannumber,'#C qq.adet.dname')
+    # Equivalent directory name in the path
+    edname   = odname.split('/')
+    # Set the last directory specified in wdname as the key to set the equivalency
+    keydname = wdname.split('/')[-2]
+    # Position of edname in the odname field
+    poskey   = int([pos for pos in range(len(odname.split('/'))) if odname.split('/')[pos] == keydname][0])
+    fdname   = wdname + '/'.join(odname.split('/')[poskey+1::]) + '/'#Directory of the files
+    nbmeas   = sf.select(str(scannumber)).data().shape[1]#Number of measurements recorded (can be different from expected in the command if user stop the scan)
+    fprefix  = SpecTools.get_ScanValueInSpecHeaderComment(sf,scannumber,'#C qq.adet.prefix')
+    filelist = [fdname + fprefix + str(val).zfill(4) + '.edf' for val in range(0,nbmeas)]
+    return filelist
 
 def CreateCompositeFromScan(wdname,sf,scannumber,background=None,roi=((0,0),(512,512))):
 	"""
@@ -154,25 +154,25 @@ def CreateCompositeFromScan(wdname,sf,scannumber,background=None,roi=((0,0),(512
 
 
 def CreateAverageFromScan(wdname,sf,scannumber):
-	"""
-	Create an average of all files of the scan (used for ex. for background determination)
-	@param wdname : working directory name
-	@type wdname : string
-	@param sf: specfile object
-	@type sf: specfile object
-	"""
-	filelist = CreateScanDataFileList(wdname,sf,scannumber)
-	print 'Calculating the average image of scan ',scannumber, '...'	
-	print '    . First file =', filelist[0]
-	print '    . Last  file =', filelist[-1]
-	nbfiles = len(filelist)
-	CompositeArray = fabio.open(filelist[0]).data.astype("float32")
-	for impath in filelist[1::]:
-		imdata = fabio.open(impath).data.astype("float32")
-		CompositeArray = CompositeArray + imdata
-	CompositeArray = numpy.divide(CompositeArray,float(nbfiles))
-	print ' -> Average image calculated.' 
-	return CompositeArray
+    """
+    Create an average of all files of the scan (used for ex. for background determination)
+    @param wdname : working directory name
+    @type wdname : string
+    @param sf: specfile object
+    @type sf: specfile object
+    """
+    filelist = CreateScanDataFileList(wdname,sf,scannumber)
+    print 'Calculating the average image of scan ',scannumber, '...'	
+    print '    . First file =', filelist[0]
+    print '    . Last  file =', filelist[-1]
+    nbfiles = len(filelist)
+    CompositeArray = fabio.open(filelist[0]).data.astype("float32")
+    for impath in filelist[1::]:
+        imdata = fabio.open(impath).data.astype("float32")
+        CompositeArray = CompositeArray + imdata
+    CompositeArray = numpy.divide(CompositeArray,float(nbfiles))
+    print ' -> Average image calculated.' 
+    return CompositeArray
 
 def ComputeDirectImage(wdname,sf,scannumber,mode,start=0,end=-1,idxlist=None,roi=None):
     """
@@ -190,9 +190,9 @@ def ComputeDirectImage(wdname,sf,scannumber,mode,start=0,end=-1,idxlist=None,roi
     @return OutputImage : resulting image
     """
     filelist = CreateScanDataFileList(wdname,sf,scannumber)
-	print 'Calculating the ',mode,' image of scan ',scannumber, '...'	
-	print '    . First file of the scan =', filelist[0]
-	print '    . Last  file of the scan =', filelist[-1]
+    print 'Calculating the ',mode,' image of scan ',scannumber, '...'	
+    print '    . First file of the scan =', filelist[0]
+    print '    . Last  file of the scan =', filelist[-1]
     nbfiles = len(filelist)
     #if mode == 'average':
     #    DirectImage = fabio.open(filelist[0]).data.astype("float32")
@@ -202,14 +202,14 @@ def ComputeDirectImage(wdname,sf,scannumber,mode,start=0,end=-1,idxlist=None,roi
     return OutputImage 
 
 if __name__ == "__main__":
-	wdname = '/Users/labo/Folder/ESRF/DATA/d_2012-07-29_inh_hygro-wood/'
-	sfpath_mat = 'DATA/sample1/sample1.dat'
-	import sys
-	sys.path.append('.'+'/Tools/')
-	import SpecTools
-	sf_mat = SpecTools.specfile.Specfile(wdname + sfpath_mat)
-	ScanBackAt55pc = '9'
-	Back = CreateAverageFromScan(wdname,sf_mat,ScanBackAt55pc)
+    wdname = '/Users/labo/Folder/ESRF/DATA/d_2012-07-29_inh_hygro-wood/'
+    sfpath_mat = 'DATA/sample1/sample1.dat'
+    import sys
+    sys.path.append('.'+'/Tools/')
+    import SpecTools
+    sf_mat = SpecTools.specfile.Specfile(wdname + sfpath_mat)
+    ScanBackAt55pc = '9'
+    Back = CreateAverageFromScan(wdname,sf_mat,ScanBackAt55pc)
 	# Test of calculation of mesh composite image and display :
 	#scannumberMesh = '6'
 	#SpecimenPosMesh, CompositeMesh = CreateCompositeFromScan(wdname,sf_mat,scannumberMesh,background=Back)
