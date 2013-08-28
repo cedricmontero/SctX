@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
- First attempt to analyze data set
+ Template to start analysis of data sets within ESRF ID13 scheme
 """
 ___author___   = 'Cédric Montero'
 ___contact___  = 'cedric.montero@esrf.fr'
@@ -23,14 +23,14 @@ pylab.ion()
 import numpy
 
 """ Internal modules (local modules files) """
-from Tools import SettingsTools,SpecTools
+from Tools import SettingsTools
 
 """ Set the working directory as experiment directory """
-#print('Set the working directory :')
+print('Set the working directory :')
 
-#SDE = SettingsTools.SetDirectoryEnvironment()
-#wdname = SDE.wdname
-#print '    . Working directory is set to',os.getcwd()
+SDE = SettingsTools.SetDirectoryEnvironment()
+wdname = SDE.wdname
+print '    . Working directory is set to',os.getcwd()
 
 """ ______________________________ANALYSIS_____________________________"""
 
