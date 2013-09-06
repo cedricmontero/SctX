@@ -14,7 +14,9 @@ import os
 class SetDirectoryEnvironment:
     def __init__(self):
         try:
+            # Retrieve the directory up to PROCESS directory if it exists and set the working directory
             self.wdname = self.getpath_uptodir('PROCESS')
+            os.chdir(self.wdname)
         except ValueError:
             print 'No PROCESS directory founded'
 
