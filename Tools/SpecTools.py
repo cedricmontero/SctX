@@ -73,7 +73,7 @@ def get_ScanStartingTime(sf,scannumber):
     schedule   = datetime.datetime.fromtimestamp(eptime)
     return schedule
 
-def get_ScanEndingTime(sf,scannumbers):
+def get_ScanEndingTime(sf,scannumber):
     """
     Get the ending time of the scan
     @type sf : specfile object from specfile module

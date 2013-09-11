@@ -20,7 +20,7 @@ import numpy
 
 class Stretching:
     """
-    Class to handle stretching experiments
+    Class to handle stretching experiments at ESRF ID13.
     """
     def set_tensmon_specfile(self,sfpath):
         """
@@ -29,9 +29,9 @@ class Stretching:
         @type sfpath : string
         """
         self.tensmon = SpecTools.specfile.Specfile(sfpath)
-        self.Stretch_Time,self.Stretch_Volt = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','strechVolt')
-        self.Stretch_Time,self.Stretch_N = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','strechN')
-        self.Stretch_Time,self.Stretch_MM = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','strechMM')
+        self.Stretch_Time,self.Stretch_Volt = SpecTools.get_ScanMeasurementsAlongTime(self.tensmon,'*','strechVolt')
+        self.Stretch_Time,self.Stretch_N = SpecTools.get_ScanMeasurementsAlongTime(self.tensmon,'*','strechN')
+        self.Stretch_Time,self.Stretch_MM = SpecTools.get_ScanMeasurementsAlongTime(self.tensmon,'*','strechMM')
         self.Stretch_Time_inHr = []
         for i in self.Stretch_Time:
             self.Stretch_Time_inHr.append((i-self.Stretch_Time[0]).days*24.+(i-self.Stretch_Time[0]).seconds/3600.)
@@ -44,9 +44,9 @@ class Stretching:
         @return : measurements of temperature, humidity, and set-point along time onto numpy arrays.
         """
         self.hummon = SpecTools.specfile.Specfile(sfpath)
-        self.Hum_Time,self.Hum_Temp = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','hum_t') 
-        self.Hum_Time,self.Hum_RH   = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','hum_h') 
-        self.Hum_Time,self.Hum_SP   = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','hum_rsp') 
+        self.Hum_Time,self.Hum_Temp = SpecTools.get_ScanMeasurementsAlongTime(self.hummon,'*','hum_t') 
+        self.Hum_Time,self.Hum_RH   = SpecTools.get_ScanMeasurementsAlongTime(self.hummon,'*','hum_h') 
+        self.Hum_Time,self.Hum_SP   = SpecTools.get_ScanMeasurementsAlongTime(self.hummon,'*','hum_rsp') 
 
     def set_scanning_specfile(self,sfpath):
         """
@@ -56,15 +56,18 @@ class Stretching:
         @return : 
         """
         self.scanning = SpecTools.specfile.Specfile(sfpath)
-        
-        self.numberofscans = SpecTools.get_NumberOfScans(self.specfile)
-        #instant_measurements = []
-        #print 'Number of scans :',self.numberofscans
-        #for scannumber in range(0,self.numberofscans):
-        #    instant_measurements.append(SpecTools.get_ScanStartingTime(self.specfile,scannumber+1))
-        #self.instant_measurements = numpy.array(instant_measurements)
-    
-
+        self.numberofscans_scanning = SpecTools.get_NumberOfScans(self.scanning)
+        instant_measurements = []
+        for scannumber in range(0,self.numberofscans):
+            instant_measurements.append(SpecTools.get_ScanStartingTime(self.scanning,scannumber+1))
+        self.instant_measurements = numpy.array(instant_measurements)
+   
+    def synchro_on_scanning(self):
+        """
+        Calculate the average of tensmon and humidity informations on each x-ray scans performed
+        """
+        self.synchro = SpecTools.get_ScanEndingTime(self.scanning,1)
+        print self.synchro        
 
     def display_Stretch_Volt(self,specimen_label = None):
         fig = pylab.figure(figsize=(9,4))
