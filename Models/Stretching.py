@@ -19,20 +19,53 @@ pylab.ion()
 import numpy
 
 class Stretching:
-    def set_specfile(self,sfpath):
+    """
+    Class to handle stretching experiments
+    """
+    def set_tensmon_specfile(self,sfpath):
         """
-        Set the specfile and retrieve the data
+        Set the tensile monitor specfile and retrieve the data
         @param sfpath : specfile path
         @type sfpath : string
         """
-        self.specfile = SpecTools.specfile.Specfile(sfpath)
+        self.tensmon = SpecTools.specfile.Specfile(sfpath)
         self.Stretch_Time,self.Stretch_Volt = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','strechVolt')
         self.Stretch_Time,self.Stretch_N = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','strechN')
         self.Stretch_Time,self.Stretch_MM = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','strechMM')
         self.Stretch_Time_inHr = []
         for i in self.Stretch_Time:
             self.Stretch_Time_inHr.append((i-self.Stretch_Time[0]).days*24.+(i-self.Stretch_Time[0]).seconds/3600.)
+
+    def set_hummon_specfile(self,sfpath):
+        """
+        Set the humidity monitor specfile and retrieve the data
+        @param sfpath : specfile path
+        @type sfpath : string
+        @return : measurements of temperature, humidity, and set-point along time onto numpy arrays.
+        """
+        self.hummon = SpecTools.specfile.Specfile(sfpath)
+        self.Hum_Time,self.Hum_Temp = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','hum_t') 
+        self.Hum_Time,self.Hum_RH   = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','hum_h') 
+        self.Hum_Time,self.Hum_SP   = SpecTools.get_ScanMeasurementsAlongTime(self.specfile,'*','hum_rsp') 
+
+    def set_scanning_specfile(self,sfpath):
+        """
+        Set the X-ray scanning specfile and retrieve the data
+        @param sfpath : specfile path
+        @type sfpath : string
+        @return : 
+        """
+        self.scanning = SpecTools.specfile.Specfile(sfpath)
         
+        self.numberofscans = SpecTools.get_NumberOfScans(self.specfile)
+        #instant_measurements = []
+        #print 'Number of scans :',self.numberofscans
+        #for scannumber in range(0,self.numberofscans):
+        #    instant_measurements.append(SpecTools.get_ScanStartingTime(self.specfile,scannumber+1))
+        #self.instant_measurements = numpy.array(instant_measurements)
+    
+
+
     def display_Stretch_Volt(self,specimen_label = None):
         fig = pylab.figure(figsize=(9,4))
         dpl = pylab.gcf()
