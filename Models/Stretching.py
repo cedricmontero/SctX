@@ -58,7 +58,7 @@ class Stretching:
         self.scanning = SpecTools.specfile.Specfile(sfpath)
         self.numberofscans_scanning = SpecTools.get_NumberOfScans(self.scanning)
         instant_measurements = []
-        for scannumber in range(0,self.numberofscans):
+        for scannumber in range(0,self.numberofscans_scanning):
             instant_measurements.append(SpecTools.get_ScanStartingTime(self.scanning,scannumber+1))
         self.instant_measurements = numpy.array(instant_measurements)
    
@@ -66,8 +66,12 @@ class Stretching:
         """
         Calculate the average of tensmon and humidity informations on each x-ray scans performed
         """
-        self.synchro = SpecTools.get_ScanEndingTime(self.scanning,1)
-        print self.synchro        
+        scan = 1
+        scan_starttime = SpecTools.get_ScanStartingTime(self.scanning,scan)
+        scan_endtime   = SpecTools.get_ScanEndingTime(self.scanning,scan)
+        print scan_starttime,scan_endtime
+        
+
 
     def display_Stretch_Volt(self,specimen_label = None):
         fig = pylab.figure(figsize=(9,4))

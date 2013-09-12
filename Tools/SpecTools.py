@@ -83,12 +83,10 @@ def get_ScanEndingTime(sf,scannumber):
     scan = sf.select(str(scannumber))
     data = scan.data()
     # Calculate the first time of the first measurement :
-    eptime = sf.epoch() + numpy.array(data[-1,:][0])
+    eptime = sf.epoch() + numpy.array(data[1,:][-1])
     schedule   = datetime.datetime.fromtimestamp(eptime)
     return schedule
     
-
-
 def get_Energy(sf):
     """
     Retrive the energy value along all scans of the spec file. In the majority of cases the energy is fixed during the measurement phase of the experiment.
