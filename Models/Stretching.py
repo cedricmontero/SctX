@@ -12,6 +12,7 @@ import sys
 import os
 sys.path.append(os.path.realpath('..') + os.path.sep + 'Tools') #  Add the Tools  directory to the module path list
 import SpecTools
+import NumpyTools
 
 # Set calculation and data visualisation library :
 import pylab
@@ -61,17 +62,28 @@ class Stretching:
         for scannumber in range(0,self.numberofscans_scanning):
             instant_measurements.append(SpecTools.get_ScanStartingTime(self.scanning,scannumber+1))
         self.instant_measurements = numpy.array(instant_measurements)
-   
-    def synchro_on_scanning(self):
+  
+    def synchro_on_scanning(self,sfscanning,timehistory,meashistory):
         """
-        Calculate the average of tensmon and humidity informations on each x-ray scans performed
+        Calculate the average of tensmon or humidity informations on each x-ray scans performed. A trick to improve rapidity of calculation have been set.
+        @param sfscanning  : specfile of the scanning history
+        @param timehistory,meashistory : time and values of measurements performed on tensmon of hummon.
         """
-        scan = 1
-        scan_starttime = SpecTools.get_ScanStartingTime(self.scanning,scan)
-        scan_endtime   = SpecTools.get_ScanEndingTime(self.scanning,scan)
-        print scan_starttime,scan_endtime
-        
-
+        scannumbers = SpecTools.get_NumberOfScans(sfscanning)
+        averageshistory = []
+        idx = 0
+        for scan in range(1,scannumbers+1):
+            scan_starttime = SpecTools.get_ScanStartingTime(self.scanning,scan)
+            idx_ini,val_ini = NumpyTools.find_nearest(scan_starttime,timehistory)
+            idx = idx_ini
+            scan_endtime   = SpecTools.get_ScanEndingTime(self.scanning,scan)
+            idx_end,val_end = NumpyTools.find_nearest(scan_endtime,timehistory)
+            idx = idx_end
+            avghistory = numpy.mean(meashistory[idx_ini:idx_end])
+            averageshistory.append(avghistory)
+            print scan, scan_starttime, scan_endtime, idx_ini, idx_end, avghistory 
+        self.scanning_scannumbers = range(1,scannumbers+1)
+        self.scanning_measurements = numpy.array(averageshistory)
 
     def display_Stretch_Volt(self,specimen_label = None):
         fig = pylab.figure(figsize=(9,4))
@@ -105,6 +117,19 @@ class Stretching:
         ax.plot(self.Stretch_Time_inHr,self.Stretch_MM,'bx',markersize=2,label = specimen_label)
         ax.set_xlabel('Elapsed Time [hr]')
         ax.set_ylabel('Disp [mm]')
+        pylab.grid(True)
+        if specimen_label != None:
+            pylab.legend()
+    
+    def display_Stretch_N_datetime(self,specimen_label = None):
+        fig = pylab.figure(figsize=(9,4))
+        dpl = pylab.gcf()
+        dpl.canvas.set_window_title('Stretch_N')
+        ax = fig.add_subplot(111)
+        dpl.autofmt_xdate()
+        ax.plot(self.Stretch_Time,self.Stretch_N,'bx',markersize=2,label=specimen_label)
+        ax.set_xlabel('Date time []')
+        ax.set_ylabel('Force [N]')
         pylab.grid(True)
         if specimen_label != None:
             pylab.legend()

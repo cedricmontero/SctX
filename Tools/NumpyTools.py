@@ -23,7 +23,7 @@ def find_nearest(value,array):
         idx = numpy.where(numpy.abs(array - value) == numpy.nanmin(numpy.abs(array - value)))[0][0]
     elif type(array[0]) == datetime.datetime:
         # Create a epoch vector of the datetime array :
-        eplist  = [int(instants.strftime('%s')) for instants in datevals]
+        eplist  = [int(instants.strftime('%s')) for instants in array]
         eparray = numpy.array(eplist)
         epvalue = int(value.strftime('%s'))
         idx = numpy.where(numpy.abs(eparray - epvalue) == numpy.nanmin(numpy.abs(eparray - epvalue)))[0][0]
