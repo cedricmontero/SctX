@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 """
  Classes to handle stretching cell of ID13 within SPEC beamline layout
 """
@@ -63,16 +63,22 @@ class Stretching:
             instant_measurements.append(SpecTools.get_ScanStartingTime(self.scanning,scannumber+1))
         self.instant_measurements = numpy.array(instant_measurements)
   
-    def synchro_on_scanning(self,sfscanning,timehistory,meashistory):
+    def synchro_on_scanning(self,sfscanning,timehistory,meashistory,sfscanrange=None):
         """
         Calculate the average of tensmon or humidity informations on each x-ray scans performed. A trick to improve rapidity of calculation have been set.
         @param sfscanning  : specfile of the scanning history
         @param timehistory,meashistory : time and values of measurements performed on tensmon of hummon.
+        @param sfscanrange : list of scannumber to synchronize
         """
         scannumbers = SpecTools.get_NumberOfScans(sfscanning)
         averageshistory = []
         idx = 0
-        for scan in range(1,scannumbers+1):
+        if sfscanrange == None:
+            scanrange = range(1,scannumbers+1)
+        else:
+            scanrange = sfscanrange
+
+        for scan in scanrange:
             scan_starttime = SpecTools.get_ScanStartingTime(self.scanning,scan)
             idx_ini,val_ini = NumpyTools.find_nearest(scan_starttime,timehistory)
             idx = idx_ini
